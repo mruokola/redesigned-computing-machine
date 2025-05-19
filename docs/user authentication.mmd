@@ -1,0 +1,36 @@
+%%{init:{"theme": "forest"}}%%
+sequenceDiagram
+    actor user as User
+    participant login as Login
+    participant frontend as Callback
+    participant spotify as Spotify
+    participant database as Database
+
+    user->>login: Login
+    activate user
+    activate login
+    login->>login: Generate state token
+    login->>database: Store `state` and `scope`
+    login-->>user: Redirect to Spotify authorization
+    deactivate login
+    user->>spotify: Authorize with `state` and `scope`
+    spotify-->>user: Redirect to callback
+    user->>frontend: Callback with `code` and `state`
+    activate frontend
+    frontend->>database: Check state
+    activate database
+    database-->>frontend: State
+    deactivate database
+
+    frontend->>spotify: Get user access token
+    activate spotify
+    spotify-->>frontend: Access token JSON
+    deactivate spotify
+    frontend->>spotify: Get user profile
+    activate spotify
+    spotify-->>frontend: Profile JSON
+    deactivate spotify
+    frontend->>database: Store user profile and access token
+    frontend-->>user: Return something
+    deactivate user
+    deactivate frontend

@@ -5,14 +5,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc -p . && pnpm tsx src/index.ts"
+    "start": "tsc -p . && pnpm tsx src/index.ts",
+    "build": "tsc -p .",
+    "scheduled": "tsc -p . && pnpm tsx src/scheduled.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "@types/node": "^22.15.18",
     "tsx": "^4.19.4"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "express": "^5.1.0",
+    "lowdb": "^7.0.1",
+    "uuid": "^11.1.0"
+  }
 }

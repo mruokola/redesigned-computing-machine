@@ -1,0 +1,21 @@
+%%{init:{"theme": "forest"}}%%
+sequenceDiagram
+    participant scheduler as Scheduler
+    participant crawler as Crawler
+    participant spotify as Spotify
+    participant database as Database
+
+    loop Every day
+        scheduler->>crawler: Trigger
+        activate crawler
+    end
+    crawler->>database: Get all users
+    activate database
+    database-->>crawler: Users with tokens
+    deactivate database
+    loop For every user
+        crawler->>spotify: Get items
+        spotify-->>crawler: JSON
+        crawler->>database: Store items
+    end
+    deactivate crawler
